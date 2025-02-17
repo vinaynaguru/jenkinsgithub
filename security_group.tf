@@ -1,12 +1,12 @@
-resource "aws_security_group" "web_sg" {
-  name_prefix = "web-sg"
+resource "aws_security_group" "web_sg1" {
+  name_prefix = "web-sg1"
   description = "Allow SSH and HTTP access"
 
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Restrict to your IP for better security
+    cidr_blocks = ["0.0.0.0/0"]  # Replace YOUR_IP with your actual IP
   }
 
   ingress {
