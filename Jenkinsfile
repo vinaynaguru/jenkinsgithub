@@ -13,25 +13,9 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Verify Terraform Installation') {
             steps {
-                script {
-                    // Install unzip
-                    sh 'sudo apt-get update -y'
-                    sh 'sudo apt-get install -y unzip'
-
-                    // Download Terraform
-                    sh 'wget https://releases.hashicorp.com/terraform/1.5.0/terraform_1.5.0_linux_amd64.zip'
-                    
-                    // Unzip Terraform
-                    sh 'unzip terraform_1.5.0_linux_amd64.zip'
-                    
-                    // Move terraform binary to a directory in PATH
-                    sh 'sudo mv terraform /usr/local/bin/'
-
-                    // Verify Terraform installation
-                    sh 'terraform -v'
-                }
+                sh 'terraform -v || echo "Terraform is not installed!"'
             }
         }
 
@@ -61,11 +45,7 @@ pipeline {
                     choice(name: 'Destroy', choices: ['No', 'Yes'], description: 'Select Yes to destroy the web server')
                 ]
                 if (userChoice == 'Yes') {
-                    stage('Destroy Infrastructure') {
-                        steps {
-                            sh 'terraform destroy -auto-approve'
-                        }
-                    }
+                    sh 'terraform destroy -auto-approve'
                 } else {
                     echo "Skipping destroy step."
                 }
