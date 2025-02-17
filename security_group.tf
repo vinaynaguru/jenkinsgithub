@@ -1,5 +1,5 @@
-resource "aws_security_group" "web_sg1" {
-  name_prefix = "web-sg1"
+resource "aws_security_group" "web_sg" {
+  name_prefix = "web-sg"
   description = "Allow SSH and HTTP access"
 
   ingress {
